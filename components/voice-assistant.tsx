@@ -1,112 +1,190 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Mic, MicOff, Volume2 } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { useState, useEffect, useRef } from "react";
+import { Mic, MicOff, Volume2 } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+// Speech types
+declare global {
+  interface Window {
+    SpeechRecognition: any;
+    webkitSpeechRecognition: any;
+  }
+}
 
 export default function VoiceAssistant() {
-  const [isListening, setIsListening] = useState(false)
-  const [isExpanded, setIsExpanded] = useState(false)
-  const [transcript, setTranscript] = useState("")
-  const [pulseWaves, setPulseWaves] = useState([1, 2, 3, 4, 5])
+  const [isListening, setIsListening] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [transcript, setTranscript] = useState("");
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
+  const recognitionRef = useRef<any>(null);
+  const synthRef = useRef<SpeechSynthesis | null>(null);
+
+  // 🎤 INIT
   useEffect(() => {
-    if (isListening) {
-      const interval = setInterval(() => {
-        setPulseWaves(prev => prev.map(() => Math.random() * 0.5 + 0.5))
-      }, 100)
-      return () => clearInterval(interval)
-    }
-  }, [isListening])
+    if (typeof window !== "undefined") {
+      // Speech synthesis
+      synthRef.current = window.speechSynthesis;
 
-  const toggleListening = () => {
-    setIsListening(!isListening)
-    setIsExpanded(!isListening)
-    if (!isListening) {
-      setTranscript("")
-      // Simulate voice recognition feedback
-      setTimeout(() => {
-        setTranscript("Listening for commands...")
-      }, 500)
+      // Speech recognition
+      const SpeechRecognition =
+        window.webkitSpeechRecognition || window.SpeechRecognition;
+
+      if (SpeechRecognition) {
+        recognitionRef.current = new SpeechRecognition();
+        recognitionRef.current.continuous = false;
+        recognitionRef.current.interimResults = true;
+        recognitionRef.current.lang = "en-US";
+
+        recognitionRef.current.onstart = () => {
+          setIsListening(true);
+          setTranscript("Listening...");
+        };
+
+        recognitionRef.current.onresult = async (event: any) => {
+          let finalTranscript = "";
+
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            if (event.results[i].isFinal) {
+              finalTranscript += event.results[i][0].transcript;
+            }
+          }
+
+          if (finalTranscript) {
+            handleAI(finalTranscript);
+          }
+        };
+
+        recognitionRef.current.onend = () => {
+          setIsListening(false);
+        };
+
+        recognitionRef.current.onerror = (e: any) => {
+          console.error(e);
+          setTranscript("Error: " + e.error);
+          setIsListening(false);
+        };
+      }
     }
-  }
+
+    return () => {
+      recognitionRef.current?.stop();
+      synthRef.current?.cancel();
+    };
+  }, []);
+
+  // 🔊 SPEAK FUNCTION
+  const speak = (text: string) => {
+    if (!synthRef.current) return;
+
+    setIsSpeaking(true);
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    utterance.onend = () => setIsSpeaking(false);
+
+    synthRef.current.speak(utterance);
+  };
+
+  // 🤖 AI CALL
+  const handleAI = async (text: string) => {
+    try {
+      setTranscript(`You said: "${text}"`);
+
+      const res = await fetch("/api/ai", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: text }),
+      });
+
+      const data = await res.json();
+
+      const reply = data.reply || "No response";
+
+      setTranscript(reply);
+      speak(reply);
+    } catch (error) {
+      console.error(error);
+      setTranscript("Error connecting to AI");
+    }
+  };
+
+  // 🎤 BUTTON
+  const toggleListening = () => {
+    if (!recognitionRef.current) {
+      setTranscript("Speech not supported");
+      return;
+    }
+
+    if (isListening) {
+      recognitionRef.current.stop();
+      setIsExpanded(false);
+    } else {
+      setIsExpanded(true);
+      setTranscript("");
+      recognitionRef.current.start();
+    }
+  };
+
+  const stopSpeaking = () => {
+    synthRef.current?.cancel();
+    setIsSpeaking(false);
+  };
 
   return (
     <div className="fixed bottom-8 right-8 z-50">
-      {/* Expanded panel */}
+      {/* PANEL */}
       <div
         className={cn(
-          "absolute bottom-20 right-0 w-80 transition-all duration-500 ease-out",
-          isExpanded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
+          "absolute bottom-20 right-0 w-80 transition-all",
+          isExpanded
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-4 pointer-events-none"
         )}
       >
-        <div className="p-5 rounded-2xl backdrop-blur-xl bg-[#0d1117]/90 border border-white/10 shadow-2xl">
+        <div className="p-5 rounded-2xl bg-black/80 border border-white/10">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center">
-              <Volume2 className="w-5 h-5 text-white" />
-            </div>
+            <Volume2 className="text-white" />
             <div>
-              <h3 className="text-white font-medium text-sm">AgroShield Voice</h3>
-              <p className="text-white/50 text-xs">AI-powered assistance</p>
+              <h3 className="text-white text-sm">AgroShield Voice</h3>
+              <p className="text-white/50 text-xs">
+                {isSpeaking ? "Speaking..." : "AI Assistant"}
+              </p>
             </div>
+
+            {isSpeaking && (
+              <button onClick={stopSpeaking} className="ml-auto text-white">
+                ⏹
+              </button>
+            )}
           </div>
-          
-          {/* Voice visualization */}
-          <div className="flex items-center justify-center gap-1 h-12 mb-4">
-            {pulseWaves.map((height, i) => (
-              <div
-                key={`pulse-${i}`}
-                className="w-1 bg-gradient-to-t from-emerald-500 to-cyan-400 rounded-full transition-all duration-100"
-                style={{
-                  height: isListening ? `${height * 40}px` : "4px",
-                }}
-              />
-            ))}
-          </div>
-          
-          <p className="text-white/70 text-sm text-center">
-            {transcript || "Click microphone to start"}
+
+          <p className="text-white text-sm text-center min-h-[3rem]">
+            {transcript || "Click mic to start"}
           </p>
-          
-          <div className="mt-4 pt-4 border-t border-white/10">
-            <p className="text-white/40 text-xs text-center">
-              Try: &quot;Show me drought risk in Maharashtra&quot;
-            </p>
-          </div>
         </div>
       </div>
 
-      {/* Main button */}
+      {/* BUTTON */}
       <button
         onClick={toggleListening}
         className={cn(
-          "relative w-16 h-16 rounded-full transition-all duration-300",
-          "flex items-center justify-center",
-          "shadow-lg hover:shadow-xl",
-          isListening 
-            ? "bg-gradient-to-br from-emerald-500 to-cyan-500 shadow-emerald-500/30" 
-            : "bg-[#0d1117]/90 backdrop-blur-xl border border-white/10 hover:border-emerald-500/50"
+          "w-16 h-16 rounded-full flex items-center justify-center",
+          isListening
+            ? "bg-green-500 animate-pulse"
+            : isSpeaking
+            ? "bg-blue-500"
+            : "bg-black border border-white/20"
         )}
       >
-        {/* Pulse rings when listening */}
-        {isListening && (
-          <>
-            <span className="absolute inset-0 rounded-full bg-emerald-500/20 animate-ping" />
-            <span className="absolute inset-[-4px] rounded-full border-2 border-emerald-500/30 animate-pulse" />
-          </>
-        )}
-        
         {isListening ? (
-          <MicOff className="w-6 h-6 text-white relative z-10" />
+          <MicOff className="text-white" />
         ) : (
-          <Mic className="w-6 h-6 text-white/80 relative z-10" />
+          <Mic className="text-white" />
         )}
       </button>
-      
-      {/* Label */}
-      <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap">
-        <span className="text-xs text-white/40">Voice Assistant</span>
-      </div>
     </div>
-  )
+  );
 }
