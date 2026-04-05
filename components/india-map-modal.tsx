@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { X, AlertTriangle, Droplets, Thermometer, Wind } from "lucide-react"
+import { X, AlertTriangle, Droplets, Thermometer, Wind, Leaf, TrendingUp } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface IndiaMapModalProps {
@@ -10,12 +10,12 @@ interface IndiaMapModalProps {
 }
 
 const regions = [
-  { id: "north", name: "North India", risk: "high", temp: "45°C", rainfall: "-32%", alert: "Severe Heatwave" },
-  { id: "south", name: "South India", risk: "medium", temp: "36°C", rainfall: "+12%", alert: "Cyclone Watch" },
-  { id: "east", name: "East India", risk: "low", temp: "34°C", rainfall: "+8%", alert: "Normal" },
-  { id: "west", name: "West India", risk: "high", temp: "42°C", rainfall: "-28%", alert: "Drought Risk" },
-  { id: "central", name: "Central India", risk: "medium", temp: "39°C", rainfall: "-15%", alert: "Heat Advisory" },
-  { id: "northeast", name: "Northeast", risk: "low", temp: "28°C", rainfall: "+22%", alert: "Flood Watch" },
+  { id: "north", name: "North India", risk: "high", temp: "45°C", rainfall: "-32%", alert: "Severe Heatwave", avgYield: "91,431 MT", cropCount: "14,454" },
+  { id: "south", name: "South India", risk: "medium", temp: "36°C", rainfall: "+12%", alert: "Cyclone Watch", avgYield: "34,76,359 MT", cropCount: "13,867" },
+  { id: "east", name: "East India", risk: "medium", temp: "34°C", rainfall: "-8%", alert: "Flood Risk", avgYield: "37,161 MT", cropCount: "10,439" },
+  { id: "west", name: "West India", risk: "high", temp: "42°C", rainfall: "-28%", alert: "Drought Risk", avgYield: "1,15,143 MT", cropCount: "6,090" },
+  { id: "central", name: "Central India", risk: "high", temp: "41°C", rainfall: "-22%", alert: "Heat & Drought Advisory", avgYield: "18,902 MT", cropCount: "10,679" },
+  { id: "northeast", name: "Northeast", risk: "low", temp: "28°C", rainfall: "+22%", alert: "Flood Watch", avgYield: "30,207 MT", cropCount: "8,876" },
 ]
 
 export default function IndiaMapModal({ isOpen, onClose }: IndiaMapModalProps) {
@@ -42,13 +42,11 @@ export default function IndiaMapModal({ isOpen, onClose }: IndiaMapModalProps) {
         isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
       )}
     >
-      {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/80 backdrop-blur-sm"
         onClick={onClose}
       />
       
-      {/* Modal */}
       <div
         className={cn(
           "relative w-full max-w-5xl max-h-[90vh] overflow-auto",
@@ -57,11 +55,10 @@ export default function IndiaMapModal({ isOpen, onClose }: IndiaMapModalProps) {
           isOpen ? "scale-100 translate-y-0" : "scale-95 translate-y-8"
         )}
       >
-        {/* Header */}
         <div className="sticky top-0 z-10 flex items-center justify-between p-6 border-b border-white/10 bg-[#0d1117]/90 backdrop-blur-xl">
           <div>
             <h2 className="text-2xl font-semibold text-white">India Climate Risk Map</h2>
-            <p className="text-white/50 text-sm mt-1">Real-time regional risk assessment</p>
+            <p className="text-white/50 text-sm mt-1">Regional risk assessment powered by crop production data</p>
           </div>
           <button
             onClick={onClose}
@@ -71,16 +68,11 @@ export default function IndiaMapModal({ isOpen, onClose }: IndiaMapModalProps) {
           </button>
         </div>
         
-        {/* Content */}
         <div className="p-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Map visualization */}
             <div className="relative aspect-square bg-[#0a0f14] rounded-2xl overflow-hidden border border-white/5">
-              {/* India outline SVG */}
               <svg viewBox="0 0 400 450" className="w-full h-full p-8">
-                {/* Simplified India map regions */}
                 <g className="cursor-pointer">
-                  {/* North */}
                   <path
                     d="M150 50 L250 50 L280 100 L260 130 L200 120 L140 130 L120 100 Z"
                     className={cn(
@@ -89,7 +81,6 @@ export default function IndiaMapModal({ isOpen, onClose }: IndiaMapModalProps) {
                     )}
                     onClick={() => setSelectedRegion("north")}
                   />
-                  {/* Northeast */}
                   <path
                     d="M280 100 L340 90 L360 140 L320 160 L280 140 Z"
                     className={cn(
@@ -98,7 +89,6 @@ export default function IndiaMapModal({ isOpen, onClose }: IndiaMapModalProps) {
                     )}
                     onClick={() => setSelectedRegion("northeast")}
                   />
-                  {/* West */}
                   <path
                     d="M60 140 L140 130 L150 200 L130 280 L80 320 L50 280 L40 200 Z"
                     className={cn(
@@ -107,7 +97,6 @@ export default function IndiaMapModal({ isOpen, onClose }: IndiaMapModalProps) {
                     )}
                     onClick={() => setSelectedRegion("west")}
                   />
-                  {/* Central */}
                   <path
                     d="M140 130 L260 130 L270 200 L250 280 L150 280 L130 200 Z"
                     className={cn(
@@ -116,7 +105,6 @@ export default function IndiaMapModal({ isOpen, onClose }: IndiaMapModalProps) {
                     )}
                     onClick={() => setSelectedRegion("central")}
                   />
-                  {/* East */}
                   <path
                     d="M260 130 L320 160 L330 240 L300 300 L270 280 L270 200 Z"
                     className={cn(
@@ -125,7 +113,6 @@ export default function IndiaMapModal({ isOpen, onClose }: IndiaMapModalProps) {
                     )}
                     onClick={() => setSelectedRegion("east")}
                   />
-                  {/* South */}
                   <path
                     d="M130 280 L250 280 L270 320 L220 420 L180 420 L130 320 Z"
                     className={cn(
@@ -136,7 +123,6 @@ export default function IndiaMapModal({ isOpen, onClose }: IndiaMapModalProps) {
                   />
                 </g>
                 
-                {/* Region labels */}
                 <text x="200" y="90" className="fill-white/60 text-[10px] text-center" textAnchor="middle">North</text>
                 <text x="320" y="125" className="fill-white/60 text-[10px]" textAnchor="middle">NE</text>
                 <text x="85" y="220" className="fill-white/60 text-[10px]" textAnchor="middle">West</text>
@@ -144,12 +130,10 @@ export default function IndiaMapModal({ isOpen, onClose }: IndiaMapModalProps) {
                 <text x="300" y="230" className="fill-white/60 text-[10px]" textAnchor="middle">East</text>
                 <text x="200" y="360" className="fill-white/60 text-[10px]" textAnchor="middle">South</text>
                 
-                {/* Animated pulse on high-risk areas */}
                 <circle cx="200" cy="80" r="8" className="fill-red-500/50 animate-ping" />
                 <circle cx="85" cy="210" r="8" className="fill-red-500/50 animate-ping" style={{ animationDelay: "0.5s" }} />
               </svg>
               
-              {/* Legend */}
               <div className="absolute bottom-4 left-4 flex gap-4">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-sm bg-red-500/60" />
@@ -166,7 +150,6 @@ export default function IndiaMapModal({ isOpen, onClose }: IndiaMapModalProps) {
               </div>
             </div>
             
-            {/* Region details */}
             <div className="space-y-4">
               {selected ? (
                 <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
@@ -196,6 +179,20 @@ export default function IndiaMapModal({ isOpen, onClose }: IndiaMapModalProps) {
                         selected.rainfall.startsWith("-") ? "text-red-400" : "text-emerald-400"
                       )}>{selected.rainfall}</p>
                     </div>
+                    <div className="p-4 rounded-xl bg-white/5">
+                      <div className="flex items-center gap-2 text-white/50 text-sm mb-2">
+                        <Leaf className="w-4 h-4" />
+                        Avg Yield
+                      </div>
+                      <p className="text-lg font-bold text-white">{selected.avgYield}</p>
+                    </div>
+                    <div className="p-4 rounded-xl bg-white/5">
+                      <div className="flex items-center gap-2 text-white/50 text-sm mb-2">
+                        <TrendingUp className="w-4 h-4" />
+                        Data Points
+                      </div>
+                      <p className="text-lg font-bold text-white">{selected.cropCount}</p>
+                    </div>
                   </div>
                   
                   <div className={cn(
@@ -222,7 +219,6 @@ export default function IndiaMapModal({ isOpen, onClose }: IndiaMapModalProps) {
                 </div>
               )}
               
-              {/* All regions list */}
               <div className="space-y-2">
                 <h4 className="text-sm font-medium text-white/50 mb-3">All Regions</h4>
                 {regions.map(region => (
