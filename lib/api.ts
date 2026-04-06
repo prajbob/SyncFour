@@ -145,6 +145,17 @@ export interface LocationInsight {
     wind_speed_kph?: number
     weather_condition?: string
     weather_source?: string
+    soil_moisture_percent?: number
+    soil_moisture_risk_band?: string
+    soil_moisture_source?: string
+  }
+  soil_moisture_guidance?: {
+    as_of?: string
+    advisory?: string
+    seed_suggestions: Array<{
+      name: string
+      fit: string
+    }>
   }
   disaster_outlook: Array<{
     type: string

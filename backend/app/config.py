@@ -60,6 +60,9 @@ class Settings:
     noaa_user_agent: str
     noaa_timeout_sec: int
     noaa_max_periods: int
+    nasa_power_base_url: str
+    nasa_power_timeout_sec: int
+    nasa_power_days: int
 
 
 @lru_cache(maxsize=1)
@@ -83,4 +86,10 @@ def get_settings() -> Settings:
         noaa_user_agent=os.getenv("NOAA_USER_AGENT", "AgroShieldAI/1.0 (dev@agroshield.local)"),
         noaa_timeout_sec=_as_int("NOAA_TIMEOUT_SEC", 12),
         noaa_max_periods=_as_int("NOAA_MAX_PERIODS", 8),
+        nasa_power_base_url=os.getenv(
+            "NASA_POWER_BASE_URL",
+            "https://power.larc.nasa.gov/api/temporal/daily/point",
+        ),
+        nasa_power_timeout_sec=_as_int("NASA_POWER_TIMEOUT_SEC", 12),
+        nasa_power_days=_as_int("NASA_POWER_DAYS", 10),
     )

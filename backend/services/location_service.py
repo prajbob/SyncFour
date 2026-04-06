@@ -12,6 +12,10 @@ from backend.services.climate_service import get_region_climate_history
 from backend.services.noaa_service import get_current_conditions
 from backend.services.recommendation_service import get_recommendation_bundle
 from backend.services.risk_engine import predict_region_risk
+from backend.services.soil_moisture_service import (
+    build_seed_guidance_for_moisture_index,
+    get_nasa_power_soil_moisture,
+)
 
 
 def _haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
@@ -109,10 +113,21 @@ def get_location_insight(latitude: float, longitude: float) -> Dict:
     nearest = find_nearest_region(latitude, longitude)
     region_id = int(nearest["id"])
 
-    prediction = predict_region_risk(region_id)
+    external_signals = data_store.get_external_signals_for_region(region_id)
+    soil_snapshot = get_nasa_power_soil_moisture(latitude, longitude)
+    if not soil_snapshot:
+        soil_snapshot = build_seed_guidance_for_moisture_index(
+            float(external_signals.get("soil_moisture_index", 0.5)),
+            source="regional_seed_signal",
+        )
+
+    soil_override = {}
+    if soil_snapshot and "gwetroot" in soil_snapshot:
+        soil_override["soil_moisture_index"] = float(soil_snapshot["gwetroot"])
+
+    prediction = predict_region_risk(region_id, override_signals=soil_override or None)
     climate_history = get_region_climate_history(region_id)
     latest_climate = climate_history[-1] if climate_history else {}
-    external_signals = data_store.get_external_signals_for_region(region_id)
     noaa_current = get_current_conditions(latitude, longitude)
 
     active_alerts = [alert for alert in get_alerts(status="active") if int(alert.get("region_id", -1)) == region_id]
@@ -152,7 +167,18 @@ def get_location_insight(latitude: float, longitude: float) -> Dict:
                 float((noaa_current or {}).get("flood_probability", latest_climate.get("flood_probability", external_signals.get("flood_probability_external", 0.0)))),
                 3,
             ),
-            "soil_moisture_index": round(float(external_signals.get("soil_moisture_index", 0.5)), 3),
+            "soil_moisture_index": round(
+                float((soil_snapshot or {}).get("gwetroot", external_signals.get("soil_moisture_index", 0.5))),
+                3,
+            ),
+            "soil_moisture_percent": float(
+                (soil_snapshot or {}).get(
+                    "soil_moisture_percent",
+                    round(float(external_signals.get("soil_moisture_index", 0.5)) * 100.0, 1),
+                )
+            ),
+            "soil_moisture_risk_band": str((soil_snapshot or {}).get("risk_band", "unknown")),
+            "soil_moisture_source": str((soil_snapshot or {}).get("source", "regional_seed")),
             "water_stress_index": round(float(external_signals.get("water_stress_index", 0.5)), 3),
             "reservoir_level": round(float(external_signals.get("reservoir_level", 0.5)), 3),
             "market_price_anomaly": round(float(external_signals.get("market_price_anomaly", 0.0)), 3),
@@ -165,6 +191,11 @@ def get_location_insight(latitude: float, longitude: float) -> Dict:
             "weather_source": str((noaa_current or {}).get("source", "regional_seed")),
         },
         "disaster_outlook": disaster_outlook,
+        "soil_moisture_guidance": {
+            "as_of": (soil_snapshot or {}).get("as_of"),
+            "advisory": (soil_snapshot or {}).get("advisory"),
+            "seed_suggestions": (soil_snapshot or {}).get("seed_suggestions", []),
+        },
         "active_alerts": active_alerts,
         "recommendations": recommendations,
     }

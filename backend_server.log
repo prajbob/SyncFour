@@ -28,3 +28,5 @@ INFO:     127.0.0.1:61803 - "OPTIONS /api/regions/4 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:52489 - "GET /api/regions/4 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:61604 - "OPTIONS /api/location/insight?lat=13.133937267912986&lon=77.56982936907777 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:61604 - "GET /api/location/insight?lat=13.133937267912986&lon=77.56982936907777 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59280 - "GET /api/regions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59302 - "GET /api/location/insight?lat=12.9716&lon=77.5946 HTTP/1.1" 200 OK

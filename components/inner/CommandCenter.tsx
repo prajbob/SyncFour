@@ -528,7 +528,11 @@ export function CommandCenter() {
             </div>
             <div className="bg-[#141a20] border border-white/10 rounded-lg p-3">
               <p className="text-xs text-slate-500 uppercase">Soil Moisture</p>
-              <p className="font-semibold mt-1">{locationInsight.current_signals.soil_moisture_index}</p>
+              <p className="font-semibold mt-1">
+                {locationInsight.current_signals.soil_moisture_percent !== undefined
+                  ? `${locationInsight.current_signals.soil_moisture_percent}%`
+                  : `${locationInsight.current_signals.soil_moisture_index}`}
+              </p>
             </div>
             <div className="bg-[#141a20] border border-white/10 rounded-lg p-3">
               <p className="text-xs text-slate-500 uppercase">Flood Prob.</p>
@@ -552,6 +556,27 @@ export function CommandCenter() {
               </p>
             </div>
           </div>
+
+          {locationInsight.soil_moisture_guidance?.seed_suggestions?.length ? (
+            <div className="bg-[#141a20] border border-emerald-500/30 rounded-lg p-3">
+              <p className="text-xs text-emerald-300 uppercase mb-1">Soil Moisture Seed Guidance</p>
+              <p className="text-sm text-slate-200">
+                {locationInsight.soil_moisture_guidance.advisory || "Seed guidance generated from moisture conditions."}
+              </p>
+              <p className="text-xs text-slate-400 mt-1">
+                Risk Band: {toTitleCase(locationInsight.current_signals.soil_moisture_risk_band || "unknown")}
+                {locationInsight.soil_moisture_guidance.as_of ? ` | Data Date: ${locationInsight.soil_moisture_guidance.as_of}` : ""}
+              </p>
+              <div className="space-y-2 mt-3">
+                {locationInsight.soil_moisture_guidance.seed_suggestions.map((seed, idx) => (
+                  <div key={`${seed.name}-${idx}`} className="bg-[#0f151d] border border-white/5 rounded p-2">
+                    <p className="text-sm font-medium text-emerald-200">{seed.name}</p>
+                    <p className="text-xs text-slate-400">{seed.fit}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
 
           <div className="bg-[#141a20] border border-white/10 rounded-lg p-3">
             <p className="text-xs text-slate-500 uppercase mb-2">Disaster Outlook</p>
