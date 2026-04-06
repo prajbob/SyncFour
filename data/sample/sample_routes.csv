@@ -1,0 +1,8 @@
+id,from_region_id,to_region_id,route_type,distance_km,travel_time_hr,route_status,disruption_risk
+1,1,2,road,210.5,4.8,open,0.22
+2,2,3,road,355.0,7.9,open,0.34
+3,3,5,rail,612.3,11.5,open,0.41
+4,1,4,road,498.0,9.6,blocked,0.78
+5,4,5,road,690.0,13.1,open,0.47
+6,2,4,road,420.0,8.4,open,0.39
+

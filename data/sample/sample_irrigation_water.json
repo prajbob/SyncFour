@@ -1,0 +1,38 @@
+[
+  {
+    "region_id": 1,
+    "date": "2026-04-05",
+    "irrigation_coverage": 0.61,
+    "water_stress_index": 0.67,
+    "reservoir_level": 0.44
+  },
+  {
+    "region_id": 2,
+    "date": "2026-04-05",
+    "irrigation_coverage": 0.68,
+    "water_stress_index": 0.52,
+    "reservoir_level": 0.53
+  },
+  {
+    "region_id": 3,
+    "date": "2026-04-05",
+    "irrigation_coverage": 0.63,
+    "water_stress_index": 0.41,
+    "reservoir_level": 0.62
+  },
+  {
+    "region_id": 4,
+    "date": "2026-04-05",
+    "irrigation_coverage": 0.48,
+    "water_stress_index": 0.82,
+    "reservoir_level": 0.31
+  },
+  {
+    "region_id": 5,
+    "date": "2026-04-05",
+    "irrigation_coverage": 0.56,
+    "water_stress_index": 0.49,
+    "reservoir_level": 0.59
+  }
+]
+

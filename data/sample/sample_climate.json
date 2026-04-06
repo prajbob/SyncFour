@@ -1,0 +1,113 @@
+[
+  {
+    "id": 1,
+    "region_id": 1,
+    "date": "2026-03-20",
+    "rainfall": 14.2,
+    "temperature": 34.8,
+    "drought_index": 0.72,
+    "flood_probability": 0.3,
+    "temperature_anomaly": 1.9,
+    "rainfall_anomaly": -7.8
+  },
+  {
+    "id": 2,
+    "region_id": 1,
+    "date": "2026-03-27",
+    "rainfall": 11.8,
+    "temperature": 35.5,
+    "drought_index": 0.76,
+    "flood_probability": 0.28,
+    "temperature_anomaly": 2.1,
+    "rainfall_anomaly": -10.1
+  },
+  {
+    "id": 3,
+    "region_id": 2,
+    "date": "2026-03-20",
+    "rainfall": 22.0,
+    "temperature": 33.1,
+    "drought_index": 0.48,
+    "flood_probability": 0.41,
+    "temperature_anomaly": 1.0,
+    "rainfall_anomaly": -2.4
+  },
+  {
+    "id": 4,
+    "region_id": 2,
+    "date": "2026-03-27",
+    "rainfall": 18.4,
+    "temperature": 33.7,
+    "drought_index": 0.51,
+    "flood_probability": 0.46,
+    "temperature_anomaly": 1.2,
+    "rainfall_anomaly": -5.7
+  },
+  {
+    "id": 5,
+    "region_id": 3,
+    "date": "2026-03-20",
+    "rainfall": 30.6,
+    "temperature": 32.4,
+    "drought_index": 0.39,
+    "flood_probability": 0.62,
+    "temperature_anomaly": 0.6,
+    "rainfall_anomaly": 3.5
+  },
+  {
+    "id": 6,
+    "region_id": 3,
+    "date": "2026-03-27",
+    "rainfall": 36.1,
+    "temperature": 31.8,
+    "drought_index": 0.35,
+    "flood_probability": 0.7,
+    "temperature_anomaly": 0.3,
+    "rainfall_anomaly": 8.9
+  },
+  {
+    "id": 7,
+    "region_id": 4,
+    "date": "2026-03-20",
+    "rainfall": 8.9,
+    "temperature": 37.4,
+    "drought_index": 0.84,
+    "flood_probability": 0.18,
+    "temperature_anomaly": 2.6,
+    "rainfall_anomaly": -13.7
+  },
+  {
+    "id": 8,
+    "region_id": 4,
+    "date": "2026-03-27",
+    "rainfall": 6.4,
+    "temperature": 38.2,
+    "drought_index": 0.88,
+    "flood_probability": 0.15,
+    "temperature_anomaly": 2.9,
+    "rainfall_anomaly": -16.1
+  },
+  {
+    "id": 9,
+    "region_id": 5,
+    "date": "2026-03-20",
+    "rainfall": 41.2,
+    "temperature": 31.2,
+    "drought_index": 0.44,
+    "flood_probability": 0.66,
+    "temperature_anomaly": 0.2,
+    "rainfall_anomaly": 12.3
+  },
+  {
+    "id": 10,
+    "region_id": 5,
+    "date": "2026-03-27",
+    "rainfall": 52.7,
+    "temperature": 30.4,
+    "drought_index": 0.4,
+    "flood_probability": 0.74,
+    "temperature_anomaly": 0.0,
+    "rainfall_anomaly": 22.8
+  }
+]
+

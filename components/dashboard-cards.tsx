@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, useRef } from "react"
+import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { Cloud, Droplets, Leaf, Truck, AlertTriangle, TrendingUp } from "lucide-react"
 
@@ -177,10 +178,10 @@ export default function DashboardCards() {
             <h2 className="text-2xl font-bold text-white">Dashboard Overview</h2>
             <p className="text-white/50 text-sm mt-1">Key metrics at a glance</p>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 transition-colors">
+          <Link href="/dashboard" className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-sm hover:bg-white/10 transition-colors">
             <TrendingUp className="w-4 h-4" />
             View Full Dashboard
-          </button>
+          </Link>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

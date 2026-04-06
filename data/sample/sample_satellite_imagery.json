@@ -1,0 +1,38 @@
+[
+  {
+    "region_id": 1,
+    "date": "2026-04-05",
+    "ndvi_anomaly": -0.22,
+    "hotspot_index": 0.61,
+    "flood_extent_index": 0.19
+  },
+  {
+    "region_id": 2,
+    "date": "2026-04-05",
+    "ndvi_anomaly": -0.09,
+    "hotspot_index": 0.44,
+    "flood_extent_index": 0.27
+  },
+  {
+    "region_id": 3,
+    "date": "2026-04-05",
+    "ndvi_anomaly": 0.04,
+    "hotspot_index": 0.29,
+    "flood_extent_index": 0.56
+  },
+  {
+    "region_id": 4,
+    "date": "2026-04-05",
+    "ndvi_anomaly": -0.31,
+    "hotspot_index": 0.74,
+    "flood_extent_index": 0.14
+  },
+  {
+    "region_id": 5,
+    "date": "2026-04-05",
+    "ndvi_anomaly": -0.06,
+    "hotspot_index": 0.41,
+    "flood_extent_index": 0.68
+  }
+]
+

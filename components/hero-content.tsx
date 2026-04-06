@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { Sprout, Truck, Building2, ShoppingBag, ChevronRight, Map, BarChart3 } from "lucide-react"
 
@@ -95,11 +96,11 @@ export default function HeroContent({ onOpenMap }: HeroContentProps) {
         "mt-10 flex flex-wrap justify-center gap-4 transition-all duration-1000 delay-600",
         mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
       )}>
-        <button className="group px-8 py-4 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-medium flex items-center gap-2 hover:shadow-xl hover:shadow-emerald-500/20 transition-all duration-300 hover:scale-105">
+        <Link href="/dashboard" className="group px-8 py-4 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-medium flex items-center gap-2 hover:shadow-xl hover:shadow-emerald-500/20 transition-all duration-300 hover:scale-105">
           <BarChart3 className="w-5 h-5" />
           Explore Dashboard
           <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-        </button>
+        </Link>
         <button 
           onClick={onOpenMap}
           className="group px-8 py-4 rounded-full bg-white/5 backdrop-blur-xl border border-white/20 text-white font-medium flex items-center gap-2 hover:bg-white/10 hover:border-white/30 transition-all duration-300"

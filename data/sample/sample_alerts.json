@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "region_id": 4,
+    "alert_type": "drought_risk",
+    "severity": "critical",
+    "message": "Rajasthan East drought index crossed 0.85 and crop stress is rising.",
+    "status": "active",
+    "created_at": "2026-04-05T09:20:00",
+    "reason": "drought_index greater_than_or_equal_to threshold",
+    "recommended_action": "Deploy drought relief and shift supply to alternate origin zones."
+  },
+  {
+    "id": 2,
+    "region_id": 5,
+    "alert_type": "flood_risk",
+    "severity": "high",
+    "message": "Bihar North flood probability crossed 0.70 for the near-term horizon.",
+    "status": "active",
+    "created_at": "2026-04-05T09:45:00",
+    "reason": "flood_probability greater_than_or_equal_to 0.70",
+    "recommended_action": "Pre-position stocks outside floodplain and reroute incoming shipments."
+  },
+  {
+    "id": 3,
+    "region_id": 1,
+    "alert_type": "route_disruption",
+    "severity": "high",
+    "message": "Primary Punjab to Rajasthan corridor is blocked due to weather damage.",
+    "status": "active",
+    "created_at": "2026-04-05T10:15:00",
+    "reason": "route_status equals blocked",
+    "recommended_action": "Switch to alternate roads and raise local inventory buffers by 20%."
+  }
+]
+

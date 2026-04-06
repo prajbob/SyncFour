@@ -1,0 +1,11 @@
+INFO:     127.0.0.1:61580 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61580 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61800 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52814 - "OPTIONS /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59126 - "OPTIONS /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59126 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52814 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "OPTIONS /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59959 - "OPTIONS /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59959 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/dashboard/summary HTTP/1.1" 200 OK

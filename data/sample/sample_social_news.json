@@ -1,0 +1,38 @@
+[
+  {
+    "region_id": 1,
+    "date": "2026-04-05",
+    "social_signal_score": 0.52,
+    "news_disruption_score": 0.57,
+    "confidence": 0.82
+  },
+  {
+    "region_id": 2,
+    "date": "2026-04-05",
+    "social_signal_score": 0.37,
+    "news_disruption_score": 0.41,
+    "confidence": 0.79
+  },
+  {
+    "region_id": 3,
+    "date": "2026-04-05",
+    "social_signal_score": 0.33,
+    "news_disruption_score": 0.36,
+    "confidence": 0.77
+  },
+  {
+    "region_id": 4,
+    "date": "2026-04-05",
+    "social_signal_score": 0.64,
+    "news_disruption_score": 0.71,
+    "confidence": 0.85
+  },
+  {
+    "region_id": 5,
+    "date": "2026-04-05",
+    "social_signal_score": 0.58,
+    "news_disruption_score": 0.67,
+    "confidence": 0.84
+  }
+]
+

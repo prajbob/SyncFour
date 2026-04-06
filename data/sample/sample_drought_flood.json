@@ -1,0 +1,43 @@
+[
+  {
+    "region_id": 1,
+    "date": "2026-04-05",
+    "drought_severity": 0.74,
+    "flood_risk": 0.24,
+    "spi_3m": -1.65,
+    "rainfall_deficit": 0.38
+  },
+  {
+    "region_id": 2,
+    "date": "2026-04-05",
+    "drought_severity": 0.57,
+    "flood_risk": 0.39,
+    "spi_3m": -0.98,
+    "rainfall_deficit": 0.24
+  },
+  {
+    "region_id": 3,
+    "date": "2026-04-05",
+    "drought_severity": 0.36,
+    "flood_risk": 0.63,
+    "spi_3m": -0.25,
+    "rainfall_deficit": 0.08
+  },
+  {
+    "region_id": 4,
+    "date": "2026-04-05",
+    "drought_severity": 0.89,
+    "flood_risk": 0.16,
+    "spi_3m": -2.11,
+    "rainfall_deficit": 0.51
+  },
+  {
+    "region_id": 5,
+    "date": "2026-04-05",
+    "drought_severity": 0.42,
+    "flood_risk": 0.78,
+    "spi_3m": 0.31,
+    "rainfall_deficit": -0.12
+  }
+]
+

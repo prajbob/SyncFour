@@ -1,0 +1,38 @@
+[
+  {
+    "region_id": 1,
+    "date": "2026-04-05",
+    "network_delay_risk": 0.58,
+    "port_rail_road_disruption": 0.61,
+    "alternate_path_score": 0.36
+  },
+  {
+    "region_id": 2,
+    "date": "2026-04-05",
+    "network_delay_risk": 0.42,
+    "port_rail_road_disruption": 0.45,
+    "alternate_path_score": 0.52
+  },
+  {
+    "region_id": 3,
+    "date": "2026-04-05",
+    "network_delay_risk": 0.37,
+    "port_rail_road_disruption": 0.39,
+    "alternate_path_score": 0.64
+  },
+  {
+    "region_id": 4,
+    "date": "2026-04-05",
+    "network_delay_risk": 0.66,
+    "port_rail_road_disruption": 0.73,
+    "alternate_path_score": 0.29
+  },
+  {
+    "region_id": 5,
+    "date": "2026-04-05",
+    "network_delay_risk": 0.54,
+    "port_rail_road_disruption": 0.62,
+    "alternate_path_score": 0.43
+  }
+]
+

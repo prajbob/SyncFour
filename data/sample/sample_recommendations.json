@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "alert_id": 1,
+    "recommendation_text": "Activate emergency drought response and mobile water support for farms.",
+    "priority": "urgent",
+    "created_at": "2026-04-05T09:21:00"
+  },
+  {
+    "id": 2,
+    "alert_id": 2,
+    "recommendation_text": "Increase warehouse buffer and shift inbound routes away from high-flood links.",
+    "priority": "high",
+    "created_at": "2026-04-05T09:46:00"
+  },
+  {
+    "id": 3,
+    "alert_id": 3,
+    "recommendation_text": "Use secondary logistics corridor and monitor congestion every 6 hours.",
+    "priority": "high",
+    "created_at": "2026-04-05T10:16:00"
+  }
+]
+
