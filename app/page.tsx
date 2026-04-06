@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Navbar from "@/components/navbar"
 import RiskTicker from "@/components/risk-ticker"
 import HeroContent from "@/components/hero-content"
 import ScrollingStats from "@/components/scrolling-stats"
@@ -88,7 +87,6 @@ export default function Home() {
       
       {/* Fixed UI elements */}
       <div className="fixed top-0 left-0 right-0 z-50">
-        <Navbar />
         <RiskTicker />
       </div>
       
