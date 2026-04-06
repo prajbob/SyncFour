@@ -1,11 +1,8 @@
-INFO:     127.0.0.1:61580 - "GET / HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:61580 - "GET /favicon.ico HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:61800 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52814 - "OPTIONS /api/dashboard/summary HTTP/1.1" 200 OK
-INFO:     127.0.0.1:59126 - "OPTIONS /api/dashboard/summary HTTP/1.1" 200 OK
-INFO:     127.0.0.1:59126 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52814 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63709 - "OPTIONS /api/dashboard/summary HTTP/1.1" 200 OK
-INFO:     127.0.0.1:59959 - "OPTIONS /api/dashboard/summary HTTP/1.1" 200 OK
-INFO:     127.0.0.1:59959 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63709 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58240 - "OPTIONS /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58240 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58240 - "OPTIONS /api/location/insight?lat=13.133906725012535&lon=77.56987128122137 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49684 - "GET /api/location/insight?lat=13.133906725012535&lon=77.56987128122137 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59794 - "OPTIONS /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59794 - "OPTIONS /api/location/insight?lat=13.133910512149194&lon=77.56984614804078 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59794 - "GET /api/dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59794 - "GET /api/location/insight?lat=13.133910512149194&lon=77.56984614804078 HTTP/1.1" 200 OK

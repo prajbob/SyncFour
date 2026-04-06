@@ -9,6 +9,7 @@ from backend.app.config import get_settings
 from backend.routes.alerts import router as alerts_router
 from backend.routes.climate import router as climate_router
 from backend.routes.dashboard import router as dashboard_router
+from backend.routes.location import router as location_router
 from backend.routes.predictions import router as predictions_router
 from backend.routes.regions import router as regions_router
 from backend.routes.routes import router as routes_router
@@ -35,6 +36,7 @@ def create_app() -> FastAPI:
         return {"status": "ok", "environment": settings.environment}
 
     app.include_router(dashboard_router, prefix="/api/dashboard", tags=["dashboard"])
+    app.include_router(location_router, prefix="/api/location", tags=["location"])
     app.include_router(regions_router, prefix="/api/regions", tags=["regions"])
     app.include_router(climate_router, prefix="/api/climate", tags=["climate"])
     app.include_router(routes_router, prefix="/api/routes", tags=["routes"])
@@ -45,4 +47,3 @@ def create_app() -> FastAPI:
 
 
 app = create_app()
-
