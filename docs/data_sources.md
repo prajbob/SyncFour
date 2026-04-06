@@ -1,8 +1,10 @@
 # Data Sources
 
 ## Climate
-- Live mode: national weather APIs, flood datasets, drought indicators.
-- Demo mode fallback: `data/sample/sample_climate.json`.
+- Live mode: NOAA/NWS real-time hourly API (`https://api.weather.gov`), fetched by lat/lon.
+- Seed refresh script: `scripts/fetch_climate_data.py`.
+- SQL seed refresh script: `scripts/seed_climate_from_noaa.py`.
+- Fallback seed file: `data/sample/sample_climate.json`.
 - Drought/Flood API replacement: `data/sample/sample_drought_flood.json`.
 
 ## Crops

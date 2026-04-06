@@ -12,6 +12,7 @@ from statistics import mean
 from typing import Dict, List, Optional
 
 from backend.app.config import get_settings
+from backend.services import noaa_service
 
 settings = get_settings()
 DATA_ROOT = Path(settings.data_dir)
@@ -108,7 +109,7 @@ def get_crop_by_id(crop_id: int) -> Optional[Dict]:
 
 
 @lru_cache(maxsize=1)
-def get_climate_events() -> List[Dict]:
+def _seed_climate_events() -> List[Dict]:
     rows = _read_json(DATA_ROOT / "sample_climate.json")
     events: List[Dict] = []
     for row in rows:
@@ -123,10 +124,38 @@ def get_climate_events() -> List[Dict]:
                 "flood_probability": _to_float(row.get("flood_probability")),
                 "temperature_anomaly": _to_float(row.get("temperature_anomaly")),
                 "rainfall_anomaly": _to_float(row.get("rainfall_anomaly")),
+                "source": row.get("source", "seed_sample"),
             }
         )
-    events.sort(key=lambda item: (item.get("region_id", 0), item.get("date", "")))
     return events
+
+
+@lru_cache(maxsize=1)
+def get_climate_events() -> List[Dict]:
+    seed_events = _seed_climate_events()
+    events_by_region: Dict[int, List[Dict]] = defaultdict(list)
+    for event in seed_events:
+        events_by_region[_to_int(event.get("region_id"))].append(event)
+
+    if settings.use_noaa_realtime:
+        for region in get_regions():
+            rid = _to_int(region.get("id"))
+            lat = _to_float(region.get("latitude"))
+            lon = _to_float(region.get("longitude"))
+            noaa_events = noaa_service.build_climate_events_from_hourly(rid, lat, lon)
+            if noaa_events:
+                events_by_region[rid] = noaa_events
+
+    merged: List[Dict] = []
+    for rid, items in events_by_region.items():
+        for item in items:
+            merged.append({**item, "region_id": rid})
+
+    merged.sort(key=lambda item: (_to_int(item.get("region_id")), str(item.get("date", ""))))
+    # Reassign deterministic ids after merge.
+    for index, item in enumerate(merged, start=1):
+        item["id"] = index
+    return merged
 
 
 def get_climate_events_by_region(region_id: int) -> List[Dict]:
@@ -553,4 +582,3 @@ def update_alert(alert_id: int, status: str) -> Optional[Dict]:
             alert["status"] = status
             return alert
     return None
-

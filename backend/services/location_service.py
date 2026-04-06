@@ -9,6 +9,7 @@ from typing import Dict, List
 from backend.services import data_store
 from backend.services.alert_service import get_alerts
 from backend.services.climate_service import get_region_climate_history
+from backend.services.noaa_service import get_current_conditions
 from backend.services.recommendation_service import get_recommendation_bundle
 from backend.services.risk_engine import predict_region_risk
 
@@ -112,6 +113,7 @@ def get_location_insight(latitude: float, longitude: float) -> Dict:
     climate_history = get_region_climate_history(region_id)
     latest_climate = climate_history[-1] if climate_history else {}
     external_signals = data_store.get_external_signals_for_region(region_id)
+    noaa_current = get_current_conditions(latitude, longitude)
 
     active_alerts = [alert for alert in get_alerts(status="active") if int(alert.get("region_id", -1)) == region_id]
     recommendations = get_recommendation_bundle(prediction)
@@ -140,10 +142,16 @@ def get_location_insight(latitude: float, longitude: float) -> Dict:
             "recommended_action": prediction["recommended_action"],
         },
         "current_signals": {
-            "temperature": round(float(latest_climate.get("temperature", 0.0)), 2),
-            "rainfall": round(float(latest_climate.get("rainfall", 0.0)), 2),
-            "drought_index": round(float(latest_climate.get("drought_index", external_signals.get("drought_index_external", 0.0))), 3),
-            "flood_probability": round(float(latest_climate.get("flood_probability", external_signals.get("flood_probability_external", 0.0))), 3),
+            "temperature": round(float((noaa_current or {}).get("temperature", latest_climate.get("temperature", 0.0))), 2),
+            "rainfall": round(float((noaa_current or {}).get("rainfall", latest_climate.get("rainfall", 0.0))), 2),
+            "drought_index": round(
+                float((noaa_current or {}).get("drought_index", latest_climate.get("drought_index", external_signals.get("drought_index_external", 0.0)))),
+                3,
+            ),
+            "flood_probability": round(
+                float((noaa_current or {}).get("flood_probability", latest_climate.get("flood_probability", external_signals.get("flood_probability_external", 0.0)))),
+                3,
+            ),
             "soil_moisture_index": round(float(external_signals.get("soil_moisture_index", 0.5)), 3),
             "water_stress_index": round(float(external_signals.get("water_stress_index", 0.5)), 3),
             "reservoir_level": round(float(external_signals.get("reservoir_level", 0.5)), 3),
@@ -152,9 +160,11 @@ def get_location_insight(latitude: float, longitude: float) -> Dict:
             "route_disruption_risk": round(float(external_signals.get("transport_disruption_index", 0.0)), 3),
             "satellite_flood_extent_index": round(float(external_signals.get("satellite_flood_extent_index", 0.0)), 3),
             "ndvi_anomaly": round(float(external_signals.get("ndvi_anomaly", 0.0)), 3),
+            "wind_speed_kph": round(float((noaa_current or {}).get("wind_speed_kph", 0.0)), 2),
+            "weather_condition": str((noaa_current or {}).get("weather_condition", "")),
+            "weather_source": str((noaa_current or {}).get("source", "regional_seed")),
         },
         "disaster_outlook": disaster_outlook,
         "active_alerts": active_alerts,
         "recommendations": recommendations,
     }
-

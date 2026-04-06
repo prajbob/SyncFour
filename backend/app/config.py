@@ -56,6 +56,10 @@ class Settings:
     alert_flood_threshold: float
     alert_drought_threshold: float
     default_forecast_horizon_days: int
+    use_noaa_realtime: bool
+    noaa_user_agent: str
+    noaa_timeout_sec: int
+    noaa_max_periods: int
 
 
 @lru_cache(maxsize=1)
@@ -75,5 +79,8 @@ def get_settings() -> Settings:
         alert_flood_threshold=_as_float("ALERT_FLOOD_THRESHOLD", 0.70),
         alert_drought_threshold=_as_float("ALERT_DROUGHT_THRESHOLD", 0.70),
         default_forecast_horizon_days=_as_int("DEFAULT_FORECAST_HORIZON_DAYS", 14),
+        use_noaa_realtime=_as_bool("USE_NOAA_REALTIME", True),
+        noaa_user_agent=os.getenv("NOAA_USER_AGENT", "AgroShieldAI/1.0 (dev@agroshield.local)"),
+        noaa_timeout_sec=_as_int("NOAA_TIMEOUT_SEC", 12),
+        noaa_max_periods=_as_int("NOAA_MAX_PERIODS", 8),
     )
-

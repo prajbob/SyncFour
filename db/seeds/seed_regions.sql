@@ -1,9 +1,8 @@
 INSERT INTO regions (id, name, country, state, latitude, longitude, priority_level)
 VALUES
-    (1, 'Punjab Central', 'India', 'Punjab', 30.9010, 75.8573, 3),
-    (2, 'Haryana Belt', 'India', 'Haryana', 29.0588, 76.0856, 2),
-    (3, 'Uttar Plains', 'India', 'Uttar Pradesh', 26.8467, 80.9462, 3),
-    (4, 'Rajasthan East', 'India', 'Rajasthan', 26.9124, 75.7873, 2),
-    (5, 'Bihar North', 'India', 'Bihar', 25.5941, 85.1376, 2)
+    (1, 'Punjab Plains', 'India', 'Punjab', 31.1471, 75.3412, 3),
+    (2, 'Maharashtra Belt', 'India', 'Maharashtra', 19.7515, 75.7139, 2),
+    (3, 'Karnataka South', 'India', 'Karnataka', 12.9716, 77.5946, 2),
+    (4, 'Rajasthan East', 'India', 'Rajasthan', 26.9124, 75.7873, 3),
+    (5, 'Bihar North', 'India', 'Bihar', 25.5941, 85.1376, 3)
 ON CONFLICT (id) DO NOTHING;
-

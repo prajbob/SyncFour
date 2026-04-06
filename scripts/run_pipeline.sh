@@ -4,6 +4,9 @@ set -euo pipefail
 echo "[1/8] Fetching climate data..."
 python scripts/fetch_climate_data.py
 
+echo "[1b] Building climate SQL seed from latest climate sample..."
+python scripts/seed_climate_from_noaa.py
+
 echo "[2/8] Fetching crop data..."
 python scripts/fetch_crop_data.py
 
@@ -26,4 +29,3 @@ echo "[8/8] Training optional baseline model..."
 python scripts/train_model.py
 
 echo "Pipeline completed successfully."
-
